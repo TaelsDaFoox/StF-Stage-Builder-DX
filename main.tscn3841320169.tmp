@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://dkhwrffqlsvlu"]
+
+[ext_resource type="Script" uid="uid://buyy2w7qcvecw" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="FontFile" uid="uid://btvx0phebkqkn" path="res://assets/fonts/FOT-Rodin Pro B.otf" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://db3a6diq3yp7k" path="res://assets/preview images/stages/Flying Carpet.png" id="3_getpj"]
+[ext_resource type="FontFile" uid="uid://ehj2jktlffcy" path="res://assets/fonts/NiseSegaSonic.TTF" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://bikk7e8klwj6r" path="res://assets/UI Graphics/STF Triangle.png" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://b42pxnyj8ochx" path="res://assets/preview images/stages/Aurora Icefield.png" id="4_ryguw"]
+[ext_resource type="Texture2D" uid="uid://i4df6fp5kpwg" path="res://assets/preview images/stages/Mushroom Hill.png" id="5_d13ii"]
+[ext_resource type="Texture2D" uid="uid://cnot5sqnopile" path="res://assets/preview images/stages/South Island.png" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://ciq1ur0bpb42a" path="res://assets/preview images/stages/Canyon Cruise.png" id="6_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://bg330vh0ltosd" path="res://assets/preview images/stages/Casino Night.png" id="7_0odxb"]
+[ext_resource type="Texture2D" uid="uid://bkk8clkf88di2" path="res://assets/preview images/stages/Dynamite Plant.png" id="8_lswn8"]
+[ext_resource type="Texture2D" uid="uid://ig6vf7y6xm8r" path="res://assets/preview images/stages/Giant Wing.png" id="9_a6jrf"]
+[ext_resource type="Texture2D" uid="uid://vta5yrph2hsi" path="res://assets/preview images/stages/Death Eggs Eye.png" id="10_xuqvo"]
+[ext_resource type="Texture2D" uid="uid://bn3qehfuaa22q" path="res://assets/preview images/stages/Hangar Cutscene.png" id="11_qsp4k"]
+[ext_resource type="Texture2D" uid="uid://bcuvht6xljvhh" path="res://assets/preview images/stages/Hangar MP.png" id="12_kq58d"]
+[ext_resource type="Texture2D" uid="uid://buaigpati887b" path="res://assets/preview images/stages/Showcase Stage.png" id="13_seu75"]
+[ext_resource type="Texture2D" uid="uid://dv31ca3khfq68" path="res://assets/preview images/stages/Mashroom Hill.png" id="14_htxhm"]
+[ext_resource type="Texture2D" uid="uid://cn6rgg5esuap7" path="res://assets/preview images/stages/South Island Beta.png" id="15_jq2sk"]
+[ext_resource type="Texture2D" uid="uid://7p13qeuihxcc" path="res://assets/preview images/stages/ADV_MOVIE1.png" id="16_4k2k6"]
+[ext_resource type="Texture2D" uid="uid://cynfdmxskjldq" path="res://assets/preview images/stages/KIYO.png" id="17_0rl1p"]
+[ext_resource type="Script" uid="uid://b5pb7h66vp2mo" path="res://menubutton.gd" id="21_getpj"]
+[ext_resource type="Texture2D" uid="uid://by274fveype12" path="res://assets/UI Graphics/StF Icon.png" id="22_ryguw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(0.4627451, 0.4627451, 0.4627451, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.31764707, 0, 0.1254902, 0.4509804)
+
+[node name="Main" type="Control" unique_id=1796273136]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0xm2m")
+stageNames = Array[String](["South Island", "Flying Carpet", "Aurora Icefield", "Mushroom Hill", "Canyon Cruise", "Casino Night", "Dynamite Plant", "Giant Wing", "Death Egg's Eye", "Hangar (Cutscene/Arcade)", "Hangar (Unused)", "Showcase Stage", "Mushroom Hill (Beta)", "South Island (Beta)", "Early Opening Cutscene", "Opening Cutscene (Final)"])
+stagePreviewImages = Array[Texture2D]([ExtResource("5_lquwl"), ExtResource("3_getpj"), ExtResource("4_ryguw"), ExtResource("5_d13ii"), ExtResource("6_1u8w0"), ExtResource("7_0odxb"), ExtResource("8_lswn8"), ExtResource("9_a6jrf"), ExtResource("10_xuqvo"), ExtResource("11_qsp4k"), ExtResource("12_kq58d"), ExtResource("13_seu75"), ExtResource("14_htxhm"), ExtResource("15_jq2sk"), ExtResource("16_4k2k6"), ExtResource("17_0rl1p")])
+
+[node name="MainArea" type="ColorRect" parent="." unique_id=407852408]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.13535273, 0.11749338, 0.11729128, 1)
+
+[node name="RedArea" type="ColorRect" parent="." unique_id=918841928]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.47200003
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 0.25598145
+grow_vertical = 2
+color = Color(0.5803922, 0, 0, 1)
+
+[node name="Midbars" type="TextureRect" parent="." unique_id=1707810746]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -66.0
+offset_right = 32.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_1bvp3")
+stretch_mode = 1
+
+[node name="StFIcon" type="TextureRect" parent="." unique_id=450432587]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 116.11621
+offset_top = 198.0
+offset_right = -140.10468
+offset_bottom = -183.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_ryguw")
+
+[node name="OptionScroller" type="ScrollContainer" parent="." unique_id=1791997584]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 49.0
+offset_right = -32.0
+grow_vertical = 2
+
+[node name="OptionList" type="VBoxContainer" parent="OptionScroller" unique_id=325263323]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="OptionsHeader" type="Label" parent="." unique_id=41188605]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+offset_right = 1.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("3_h2yge")
+theme_override_font_sizes/font_size = 38
+text = "Select Stage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StagePreviewImage" type="TextureRect" parent="." unique_id=111724058]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 43.0
+offset_right = -43.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_0rl1p")
+stretch_mode = 5
+
+[node name="ButtonTemplate" type="Button" parent="." unique_id=164098495]
+layout_mode = 0
+offset_top = 49.0
+offset_right = 544.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("1_ig7tw")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lquwl")
+text = "Sample Button"
+script = ExtResource("21_getpj")
+
+[connection signal="pressed" from="ButtonTemplate" to="ButtonTemplate" method="_on_pressed"]
