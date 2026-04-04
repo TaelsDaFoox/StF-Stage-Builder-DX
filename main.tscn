@@ -24,6 +24,9 @@
 [ext_resource type="Script" uid="uid://b5pb7h66vp2mo" path="res://menubutton.gd" id="21_getpj"]
 [ext_resource type="Texture2D" uid="uid://by274fveype12" path="res://assets/UI Graphics/StF Icon.png" id="22_ryguw"]
 [ext_resource type="FontFile" uid="uid://cwdp3jrfygnwb" path="res://assets/fonts/FOT-NewRodin Pro B.otf" id="23_1u8w0"]
+[ext_resource type="AudioStream" uid="uid://bjurci4ywiqtg" path="res://assets/audio/sfx/menuMove.wav" id="25_a6jrf"]
+[ext_resource type="AudioStream" uid="uid://bxpgu66l48lyw" path="res://assets/audio/sfx/menuConfirm.wav" id="26_xuqvo"]
+[ext_resource type="AudioStream" uid="uid://cl0lrh05gcp3o" path="res://assets/audio/sfx/menuBack.wav" id="27_qsp4k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
 bg_color = Color(0.4627451, 0.4627451, 0.4627451, 0)
@@ -41,6 +44,7 @@ grow_vertical = 2
 script = ExtResource("1_0xm2m")
 stageNames = Array[String](["South Island", "Flying Carpet", "Aurora Icefield", "Mushroom Hill", "Canyon Cruise", "Casino Night", "Dynamite Plant", "Giant Wing", "Death Egg's Eye", "Hangar (Cutscene/Arcade)", "Hangar (Unused)", "Showcase Stage", "Mushroom Hill (Beta)", "South Island (Beta)", "Early Opening Cutscene", "Opening Cutscene (Final)"])
 optionNames = Array[String](["Stage Data", "Brightness", "XY Position", "Texture/Palette", "Lighting Color", "Music/Level ID", "Background/Sky Color", "Floor Model", "Arena Platform Model", "Corner Pole models", "Extra Model", "Object Models", "Wall Models", "Stage Property", "Stage DSP", "Cloud Models", "Ring-Out Floor Height", "Wall Hitbox Height", "Arena Scale"])
+mainMenuOptions = Array[String](["Edit a Stage!", "Export as .gerald", "Import from .gerald", "Set .gerald Directory", "Set ROM Directory"])
 stagePreviewImages = Array[Texture2D]([ExtResource("5_lquwl"), ExtResource("3_getpj"), ExtResource("4_ryguw"), ExtResource("5_d13ii"), ExtResource("6_1u8w0"), ExtResource("7_0odxb"), ExtResource("8_lswn8"), ExtResource("9_a6jrf"), ExtResource("10_xuqvo"), ExtResource("11_1u8w0"), ExtResource("12_kq58d"), ExtResource("13_seu75"), ExtResource("14_htxhm"), ExtResource("15_jq2sk"), ExtResource("16_4k2k6"), ExtResource("17_0rl1p")])
 descriptions = Array[String](["Miscellaneous stage settings. How to use it isn't documented yet to my knowledge...?", "Brightness of the whole stage.", "Stage_X and Stage_Y vectors. Affects lighting and shadows, I think?", "Set of textures and palettes for the stage to use.", "Lighting of the whole stage. Works like a \"multiply\" blend mode, so coloring this will make things darker.", "ID of the Music to use, presumably? idk", "Color that the stage is drawn on top of, usually the sky color.", "Model ID for the floor below the arena platform.", "Model ID for the platform you stand on.", "Model ID for the poles at the corners of the arena.", "Model ID for an object with unique properties, like South Island's bridge.", "Model IDs of the various decoration objects placed around the stage.", "Model IDs of the arena walls.", "Mysterious stage properties? Not thoroughly documented to my knowledge", "I'm gonna be so honest I have no idea what this one does", "Model IDs of the clouds in the sky, and other distant objects like one of Casino Night's blimps.", "Height at which characters will land when knocked over the walls when KOed.", "Hitbox height for the arena walls, for characters being knocked over it during KOs.", "Visual(?) scale of the arena platform."])
 
@@ -168,9 +172,34 @@ mouse_filter = 2
 texture = ExtResource("17_0rl1p")
 stretch_mode = 5
 
-[node name="ButtonTemplate" type="Button" parent="." unique_id=164098495]
+[node name="SFX" type="Node" parent="." unique_id=1644494539]
+
+[node name="Move" type="AudioStreamPlayer" parent="SFX" unique_id=653889423]
+stream = ExtResource("25_a6jrf")
+volume_db = -25.0
+
+[node name="Confirm" type="AudioStreamPlayer" parent="SFX" unique_id=1462329294]
+stream = ExtResource("26_xuqvo")
+volume_db = -25.0
+
+[node name="Back" type="AudioStreamPlayer" parent="SFX" unique_id=671181507]
+stream = ExtResource("27_qsp4k")
+volume_db = -25.0
+
+[node name="LineEditTemplate" type="LineEdit" parent="." unique_id=484419683]
 layout_mode = 0
 offset_top = 49.0
+offset_right = 544.0
+offset_bottom = 348.0
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Model ID"
+alignment = 1
+
+[node name="ButtonTemplate" type="Button" parent="." unique_id=164098495]
+layout_mode = 0
+offset_top = 348.0
 offset_right = 544.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
@@ -182,6 +211,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_lquwl")
 text = "Sample Button"
 script = ExtResource("21_getpj")
-theme_override_fonts/font = ExtResource("23_1u8w0")
 
+[connection signal="mouse_entered" from="ButtonTemplate" to="ButtonTemplate" method="_on_mouse_entered"]
 [connection signal="pressed" from="ButtonTemplate" to="ButtonTemplate" method="_on_pressed"]
