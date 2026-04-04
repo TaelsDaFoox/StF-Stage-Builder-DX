@@ -148,13 +148,30 @@ anchor_left = 0.5
 anchor_right = 1.0
 offset_left = 5.0
 offset_top = 71.0
-offset_bottom = 569.0
+offset_bottom = 492.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 2
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("1_ig7tw")
 theme_override_font_sizes/font_size = 38
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ErrorLog" type="Label" parent="." unique_id=1489804434]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 505.0
+offset_bottom = 564.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 2
 autowrap_mode = 2
 
 [node name="StagePreviewImage" type="TextureRect" parent="." unique_id=111724058]

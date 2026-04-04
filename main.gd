@@ -17,6 +17,7 @@ extends Control
 @onready var sfxBack = $SFX/Back
 @onready var lineEditTemplate = $LineEditTemplate
 @onready var backBtn = $BackButton
+@onready var errorLog = $ErrorLog
 var romPath:String
 #var rom
 var selectedStage=-1
@@ -36,6 +37,7 @@ func _ready() -> void:
 	refreshMenu()
 
 func refreshMenu():
+	errorLog.text=""
 	if selectedStage>-1:
 		stageHeader.text = stageNames[selectedStage]
 	else:
@@ -95,7 +97,7 @@ func refreshMenu():
 			optionList.add_child(newBtn)
 			newBtn=btnTemplate.duplicate()
 			newBtn.visible=true
-			newBtn.text="Done!"
+			newBtn.text="Confirm!"
 			optionList.add_child(newBtn)
 
 
@@ -138,6 +140,8 @@ func btnPressed(idx:int):
 			romPath=optionList.get_node("LineEditTemplate").text
 			var rom = FileAccess.open(romPath, FileAccess.READ)
 			if rom == null:
+				errorLog.text="Failed to open ROM file."
+				sfxBack.play()
 				print("Failed to open file: ", romPath)
 				print("Error: ", FileAccess.get_open_error())
 			else:
@@ -152,15 +156,24 @@ func btnPressed(idx:int):
 		MENUS.PLATFORM:
 			if optionList.get_node("LineEditTemplate").text.is_valid_int():
 				var newValue = int(optionList.get_node("LineEditTemplate").text)
-				WriteToRomWithStageOffset(newValue,"0x1A".hex_to_int())
-				menu=MENUS.EDITMAIN
-				refreshMenu()
-func WriteToRomWithStageOffset(value:int,offset:int):
+				var result = WriteToRomWithStageOffset(newValue,"0x1A".hex_to_int())
+				if result:
+					menu=MENUS.EDITMAIN
+					refreshMenu()
+				else:
+					errorLog.text="Something went wrong.\nIs the game still running? (It shouldn't be!)"
+					sfxBack.play()
+			else:
+				errorLog.text="Invalid number!"
+				sfxBack.play()
+func WriteToRomWithStageOffset(value:int,offset:int) -> bool:
 	if selectedStage!=-1 and romPath:
 		var rom = FileAccess.open(romPath, FileAccess.READ_WRITE)
 		rom.seek(stageRomOffsets[selectedStage].hex_to_int()+offset)
-		rom.store_16(value)
+		var didItWork = rom.store_16(value)
 		rom.close()
+		return didItWork
+	return false
 func ReadFromRomWithStageOffset(offset:int) -> int:
 	if selectedStage!=-1 and romPath:
 		var rom = FileAccess.open(romPath, FileAccess.READ)
@@ -172,7 +185,7 @@ func ReadFromRomWithStageOffset(offset:int) -> int:
 
 
 func _on_back_button_pressed() -> void:
-	sfxConfirm.play()
+	sfxBack.play()
 	match menu:
 		MENUS.EDITMAIN:
 			selectedStage=-1
