@@ -212,5 +212,25 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lquwl")
 text = "Sample Button"
 script = ExtResource("21_getpj")
 
+[node name="BackButton" type="Button" parent="." unique_id=27013199]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 150.0
+offset_top = 569.0
+offset_right = -162.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 28
+text = "Go Back"
+
 [connection signal="mouse_entered" from="ButtonTemplate" to="ButtonTemplate" method="_on_mouse_entered"]
 [connection signal="pressed" from="ButtonTemplate" to="ButtonTemplate" method="_on_pressed"]
+[connection signal="mouse_entered" from="BackButton" to="." method="_on_back_button_mouse_entered"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
