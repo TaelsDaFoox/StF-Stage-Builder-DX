@@ -150,7 +150,8 @@ offset_left = 5.0
 offset_top = 71.0
 offset_bottom = 492.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/line_spacing = 2
+theme_override_constants/line_spacing = 5
+theme_override_constants/paragraph_spacing = -8
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("1_ig7tw")
 theme_override_font_sizes/font_size = 38
@@ -246,6 +247,32 @@ theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("23_1u8w0")
 theme_override_font_sizes/font_size = 28
 text = "Go Back"
+
+[node name="ColorPickerTemplate" type="PanelContainer" parent="." unique_id=2045158310]
+visible = false
+layout_mode = 0
+offset_top = 49.0
+offset_right = 544.0
+offset_bottom = 648.0
+size_flags_vertical = 3
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="ColorPickerTemplate" unique_id=488780583]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+edit_intensity = false
+
+[node name="Label" type="Label" parent="ColorPickerTemplate" unique_id=1473787815]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 32
+text = "Click to Change Color"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="ButtonTemplate" to="ButtonTemplate" method="_on_mouse_entered"]
 [connection signal="pressed" from="ButtonTemplate" to="ButtonTemplate" method="_on_pressed"]
