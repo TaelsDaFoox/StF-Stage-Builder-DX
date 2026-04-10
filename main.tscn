@@ -205,6 +205,7 @@ stream = ExtResource("27_qsp4k")
 volume_db = -25.0
 
 [node name="LineEditTemplate" type="LineEdit" parent="." unique_id=484419683]
+visible = false
 layout_mode = 0
 offset_top = 49.0
 offset_right = 544.0
@@ -273,6 +274,37 @@ theme_override_font_sizes/font_size = 32
 text = "Click to Change Color"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LabelledLineEditTemplate" type="VBoxContainer" parent="." unique_id=1433917299]
+visible = false
+layout_mode = 0
+offset_top = 49.0
+offset_right = 544.0
+offset_bottom = 648.0
+size_flags_vertical = 3
+
+[node name="LabelMargin" type="MarginContainer" parent="LabelledLineEditTemplate" unique_id=938089333]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 0
+
+[node name="Label" type="Label" parent="LabelledLineEditTemplate/LabelMargin" unique_id=1739016377]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 32
+text = "Label Text"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="LabelledLineEditTemplate" unique_id=767384656]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("23_1u8w0")
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Model ID"
+alignment = 1
 
 [connection signal="mouse_entered" from="ButtonTemplate" to="ButtonTemplate" method="_on_mouse_entered"]
 [connection signal="pressed" from="ButtonTemplate" to="ButtonTemplate" method="_on_pressed"]

@@ -19,6 +19,7 @@ extends Control
 @onready var backBtn = $BackButton
 @onready var errorLog = $ErrorLog
 @onready var colorPickTemplate=$ColorPickerTemplate
+@onready var labelledLineEditTemplate=$LabelledLineEditTemplate
 var romPath:String
 var geraldDir:String
 #var rom
@@ -70,8 +71,10 @@ func refreshMenu():
 	for i in optionList.get_children():
 		i.queue_free()
 	backBtn.visible=true
+	backBtn.text="Cancel"
 	match menu:
 		MENUS.STAGES:
+			backBtn.text="Go Back"
 			header.text = "Select Stage"
 			for i in stageNames.size():
 				var newBtn= btnTemplate.duplicate()
@@ -82,6 +85,7 @@ func refreshMenu():
 					newBtn.modulate.b=0.75
 				optionList.add_child(newBtn)
 		MENUS.EDITMAIN:
+			backBtn.text="Go Back"
 			header.text = "Editing Stage"
 			for i in optionNames.size():
 				var newBtn= btnTemplate.duplicate()
@@ -92,6 +96,7 @@ func refreshMenu():
 				#	newBtn.modulate.b=0.75
 				optionList.add_child(newBtn)
 		MENUS.MAIN:
+			backBtn.text="Go Back"
 			backBtn.visible=false
 			header.text = "Main Menu"
 			for i in mainMenuOptions.size():
@@ -158,14 +163,62 @@ func refreshMenu():
 			var rgb=ReadRGBFromRomWithStageOffset("0x10".hex_to_int())
 			description.text="Original Color:\n"+str(rgb)
 			var newBtn= colorPickTemplate.duplicate()
-			newBtn.get_node("ColorPickerButton").color=Color.from_rgba8(rgb[0]*2,rgb[1]*2,rgb[2]*2,255)
+			newBtn.get_node("ColorPickerButton").color=Color.from_rgba8(rgb[0]*1.9921875,rgb[1]*1.9921875,rgb[2]*1.9921875,255)
 			newBtn.visible=true
 			optionList.add_child(newBtn)
 			newBtn=btnTemplate.duplicate()
 			newBtn.visible=true
 			newBtn.text="Confirm!"
 			optionList.add_child(newBtn)
-
+		MENUS.WALLS:
+			header.text="Wall Models"
+			#description.visible=true
+			#var gotValue=ReadFromRomWithStageOffset("0x18".hex_to_int())
+			#description.text="Original model ID:\n"+str(gotValue)
+			var newBtn= labelledLineEditTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.get_node("LineEdit").placeholder_text="Wall Model 1"
+			newBtn.get_node("LineEdit").text=str(ReadFromRomWithStageOffset(132))
+			newBtn.get_node("LabelMargin/Label").text="Wall Models (Static)"
+			optionList.add_child(newBtn)
+			for i in 7:
+				newBtn= lineEditTemplate.duplicate()
+				newBtn.visible=true
+				newBtn.placeholder_text="Wall Model "+str(i+2)
+				newBtn.text=str(ReadFromRomWithStageOffset(132+(i+1)*2))
+				optionList.add_child(newBtn)
+			
+			newBtn= labelledLineEditTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.get_node("LineEdit").placeholder_text="Wall Model 1 (Shake 1)"
+			newBtn.get_node("LineEdit").text=str(ReadFromRomWithStageOffset(148))
+			newBtn.get_node("LabelMargin/Label").text="Wall Models (Shake frame 1)"
+			optionList.add_child(newBtn)
+			for i in 7:
+				newBtn= lineEditTemplate.duplicate()
+				newBtn.visible=true
+				newBtn.text=str(ReadFromRomWithStageOffset(148+(i+1)*2))
+				newBtn.placeholder_text="Wall Model "+str(i+2)+" (Shake 1)"
+				optionList.add_child(newBtn)
+			
+			newBtn= labelledLineEditTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.get_node("LineEdit").placeholder_text="Wall Model 1 (Shake 2)"
+			newBtn.get_node("LineEdit").text=str(ReadFromRomWithStageOffset(164))
+			newBtn.get_node("LabelMargin/Label").text="Wall Models (Shake frame 2)"
+			optionList.add_child(newBtn)
+			for i in 7:
+				newBtn= lineEditTemplate.duplicate()
+				newBtn.visible=true
+				newBtn.text=str(ReadFromRomWithStageOffset(164+(i+1)*2))
+				newBtn.placeholder_text="Wall Model "+str(i+2)+" (Shake 2)"
+				optionList.add_child(newBtn)
+			
+			newBtn=btnTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.text="Confirm!"
+			optionList.add_child(newBtn)
+			description.text="Define up to 8 models to be used for a wall.\n(which is then duplicated for the other 3 walls, they can't be unique.)\nWalls briefly use different models when being shaken, though the vanilla game doesn't use this feature, as it defines the same models for all 3 frames."
 
 func _process(delta: float) -> void:
 	midbars.position.y=fmod(midbars.position.y+delta*50.0+64.0,64.0)-64.0
@@ -197,6 +250,8 @@ func _process(delta: float) -> void:
 			stagePreviewPic.visible=true
 			stagePreviewPic.texture=stagePreviewImages[selectedStage]
 			stagePreviewPic.modulate=optionList.get_node("ColorPickerTemplate/ColorPickerButton").color
+		MENUS.WALLS:
+			description.visible=true
 func btnPressed(idx:int):
 	sfxConfirm.play()
 	match menu:
@@ -229,6 +284,8 @@ func btnPressed(idx:int):
 				refreshMenu()
 		MENUS.EDITMAIN:
 			match idx:
+				3:
+					menu=MENUS.TEXPAL
 				4:
 					menu=MENUS.RGB
 				7:
@@ -237,6 +294,8 @@ func btnPressed(idx:int):
 					menu=MENUS.PLATFORM
 				9:
 					menu=MENUS.POLE
+				12:
+					menu=MENUS.WALLS
 			refreshMenu()
 		MENUS.PLATFORM:
 			if optionList.get_node("LineEditTemplate").text.is_valid_int():
@@ -286,6 +345,15 @@ func btnPressed(idx:int):
 			else:
 				errorLog.text="Something went wrong.\nIs the game still running? (It shouldn't be!)"
 				sfxBack.play()
+		MENUS.WALLS:
+			for i in optionList.get_children():
+				if i.name!="ButtonTemplate":
+					if i.get_child_count()>0:
+						var write = WriteToRomWithStageOffset(int(i.get_node("LineEdit").text),132+i.get_index()*2)
+					else:
+						var write = WriteToRomWithStageOffset(int(i.text),132+i.get_index()*2)
+			menu=MENUS.EDITMAIN
+			refreshMenu()
 func WriteToRomWithStageOffset(value:int,offset:int) -> bool:
 	if selectedStage!=-1 and romPath:
 		var rom = FileAccess.open(romPath, FileAccess.READ_WRITE)
@@ -341,6 +409,10 @@ func _on_back_button_pressed() -> void:
 		MENUS.POLE:
 			menu=MENUS.EDITMAIN
 		MENUS.RGB:
+			menu=MENUS.EDITMAIN
+		MENUS.WALLS:
+			menu=MENUS.EDITMAIN
+		MENUS.TEXPAL:
 			menu=MENUS.EDITMAIN
 	refreshMenu()
 
