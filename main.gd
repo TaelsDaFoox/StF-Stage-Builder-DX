@@ -126,6 +126,7 @@ func refreshMenu():
 			var newBtn= lineEditTemplate.duplicate()
 			newBtn.visible=true
 			newBtn.placeholder_text="New Model ID"
+			newBtn.text=str(gotValue)
 			optionList.add_child(newBtn)
 			newBtn=btnTemplate.duplicate()
 			newBtn.visible=true
@@ -139,6 +140,7 @@ func refreshMenu():
 			var newBtn= lineEditTemplate.duplicate()
 			newBtn.visible=true
 			newBtn.placeholder_text="New Model ID"
+			newBtn.text=str(gotValue)
 			optionList.add_child(newBtn)
 			newBtn=btnTemplate.duplicate()
 			newBtn.visible=true
@@ -152,6 +154,7 @@ func refreshMenu():
 			var newBtn= lineEditTemplate.duplicate()
 			newBtn.visible=true
 			newBtn.placeholder_text="New Model ID"
+			newBtn.text = str(gotValue)
 			optionList.add_child(newBtn)
 			newBtn=btnTemplate.duplicate()
 			newBtn.visible=true
@@ -219,7 +222,26 @@ func refreshMenu():
 			newBtn.text="Confirm!"
 			optionList.add_child(newBtn)
 			description.text="Define up to 8 models to be used for a wall.\n(which is then duplicated for the other 3 walls, they can't be unique.)\nWalls briefly use different models when being shaken, though the vanilla game doesn't use this feature, as it defines the same models for all 3 frames."
-
+		MENUS.TEXPAL:
+			header.text="Texture/Palette"
+			var newBtn= labelledLineEditTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.get_node("LineEdit").placeholder_text="Texture Set ID"
+			newBtn.get_node("LineEdit").text=str(ReadFromRomWithStageOffset(12))
+			newBtn.get_node("LabelMargin/Label").text="Texture Set ID"
+			optionList.add_child(newBtn)
+			newBtn= labelledLineEditTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.get_node("LineEdit").placeholder_text="Palette Set ID"
+			newBtn.get_node("LineEdit").text=str(ReadFromRomWithStageOffset(14))
+			newBtn.get_node("LabelMargin/Label").text="Palette Set ID"
+			optionList.add_child(newBtn)
+			
+			newBtn=btnTemplate.duplicate()
+			newBtn.visible=true
+			newBtn.text="Confirm!"
+			optionList.add_child(newBtn)
+			description.text="Texture set cheat sheet:\n2: South Island\n3: Mushroom Hill\n4: Flying Carpet\n5: Dynamite Plant\n6: Giant Wing\n7: Casino Night\n8: Aurora Icefield\n9: Death Egg II\n10: Canyon Cruise"
 func _process(delta: float) -> void:
 	midbars.position.y=fmod(midbars.position.y+delta*50.0+64.0,64.0)-64.0
 	stagePreviewPic.visible=false
@@ -251,6 +273,8 @@ func _process(delta: float) -> void:
 			stagePreviewPic.texture=stagePreviewImages[selectedStage]
 			stagePreviewPic.modulate=optionList.get_node("ColorPickerTemplate/ColorPickerButton").color
 		MENUS.WALLS:
+			description.visible=true
+		MENUS.TEXPAL:
 			description.visible=true
 func btnPressed(idx:int):
 	sfxConfirm.play()
@@ -352,6 +376,11 @@ func btnPressed(idx:int):
 						var write = WriteToRomWithStageOffset(int(i.get_node("LineEdit").text),132+i.get_index()*2)
 					else:
 						var write = WriteToRomWithStageOffset(int(i.text),132+i.get_index()*2)
+			menu=MENUS.EDITMAIN
+			refreshMenu()
+		MENUS.TEXPAL:
+			WriteToRomWithStageOffset(int(optionList.get_child(0).get_node("LineEdit").text),12)
+			WriteToRomWithStageOffset(int(optionList.get_child(1).get_node("LineEdit").text),14)
 			menu=MENUS.EDITMAIN
 			refreshMenu()
 func WriteToRomWithStageOffset(value:int,offset:int) -> bool:
